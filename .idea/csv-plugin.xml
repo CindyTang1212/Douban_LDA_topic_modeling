@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/post_content/test_post_content.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/result/lda_result.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/title/所有标题.csv">
           <value>
             <Attribute>
