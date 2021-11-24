@@ -77,11 +77,10 @@ def lda_learning(n_features, n_topics, contents):
     return tf, tf_vectorizer, lda, docres
 
 
-def get_perplexity(n_features, n_max_topics, contents):
+def get_perplexity(n_max_topics, contents):
     # 建立lda模型，计算模型困惑度
     plexs = []
     tf_vectorizer = CountVectorizer(strip_accents='unicode',
-                                    max_features=n_features,
                                     stop_words='english',
                                     max_df=0.5,
                                     min_df=10)
@@ -123,11 +122,11 @@ if __name__ == '__main__':
     # df = pd.read_csv('post_content/all.csv', error_bad_lines=False)
     # df['content_cutted'] = df['页面标题'].apply(my_cut) + df['文本'].apply(my_cut) + df['高赞评论1'].apply(
     #     my_cut) + df['高赞评论2'].apply(my_cut)
-    # df.to_csv('result/content_cutted.csv')
+    # df.to_csv('result/content_cutted.csv', columns=['id', '页面标题', '文本', '高赞评论1', '高赞评论2', 'content_cutted'])
     # print('切割完成！')
 
     # # 困惑度计算
-    # df = pd.read_csv('content_cutted.csv', error_bad_lines=False).drop_duplicates(subset=['content_cutted'])
+    # df = pd.read_csv('result/content_cutted.csv', error_bad_lines=False).drop_duplicates(subset=['content_cutted'])
     # get_perplexity(n_max_topics=10, contents=df['content_cutted'].values.astype('U'))
 
     # 建立主题模型

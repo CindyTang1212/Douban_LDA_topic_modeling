@@ -78,12 +78,12 @@ def str2csv(filePath, s, x):
     """
     if x == 'node':
         with open(filePath, 'w', encoding='utf-8') as f:
-            f.write("Label,Weight\r")
+            f.write("label,weight\r")
             f.write(s)
         print('写入文件成功,请在' + filePath + '中查看')
     else:
         with open(filePath, 'w', encoding='gbk') as f:
-            f.write("Source,Target,Weight\r")
+            f.write("source,target,weight\r")
             f.write(s)
         print('写入文件成功,请在' + filePath + '中查看')
 
@@ -154,23 +154,23 @@ def build_matrix(co_authors_list, is_reverse):
 
 def get_co_occurance_results(edge_file, node_file):
     edge_str = pd.read_csv(edge_file, encoding='gbk')
-    edge_str1 = edge_str[edge_str['Weight'] >= 100]
-    Source = edge_str1['Source'].tolist()
-    Target = edge_str1['Target'].tolist()
+    edge_str1 = edge_str[edge_str['weight'] > 70]
+    Source = edge_str1['source'].tolist()
+    Target = edge_str1['target'].tolist()
     co = Source + Target
     co = list(set(co))
     node_str = pd.read_csv(node_file, encoding='utf-8')
     # node_str
-    node_str = node_str[node_str['Label'].isin(co)]
-    node_str['id'] = node_str['Label']
-    node_str = node_str[['id', 'Label', 'Weight']]  # 调整列顺序
+    node_str = node_str[node_str['label'].isin(co)]
+    node_str['id'] = node_str['label']
+    node_str = node_str[['id', 'label', 'weight']]  # 调整列顺序
     # node_str
     node_str.to_csv(path_or_buf='result/semantic/node' + topic + '_Final.csv', index=False)  # 写入csv文件
     edge_str1.to_csv(path_or_buf='result/semantic/edge' + topic + '_Final.csv', index=False)  # 写入csv文件
 
 
 if __name__ == '__main__':
-    topic = 'Topic2'
+    topic = 'Topic1'
     filePath1 = 'result/semantic/node' + topic + '.csv'
     filePath2 = 'result/semantic/edge' + topic + '.csv'
     # 读取csv文件获取数据并存储到列表中
@@ -182,7 +182,6 @@ if __name__ == '__main__':
         for s in r:
             word_lists.append(s)
     word_lists = [w.strip() for w in word_lists if len(w) > 4]
-    print(len(word_lists))
     # 根据共同词列表, 构建共现矩阵(存储到字典中), 并将该字典按照权值排序
     node_str, edge_str = build_matrix(word_lists, is_reverse=True)
     # 将字符串写入到本地csv文件中
